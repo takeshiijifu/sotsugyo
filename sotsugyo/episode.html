@@ -28,13 +28,13 @@
       <!-- 左側メニュー：トップページの各コンテンツへのリンク -->
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a class="nav-link" href="index.html">マイページ</a>
+          <a class="nav-link" href="index.html">ホーム</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">配信・録音する</a>
+          <a class="nav-link" href="index.html">録音・配信</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="index.html">お気に入りリスト</a>
+          <a class="nav-link" href="index.html">マイリスト</a>
         </li>
     </ul>
     <form class="form-inline">
@@ -55,92 +55,184 @@
       <section id="menu">
         <div class="container">
           <!-- タブ型ナビゲーション -->
-          <div class="container mb-4">
+          <div class="container mb-2">  
+              <a href="channel.html"><img src="img/yajirushi.png" width="30" height="30" alt="戻る"></a>
+             </div>
+          <div class="container mb-2">
           <div class="row">
           <div class="text-right col-5">
           <img class="img-thumbnail img-responsive center-block" src="img/icon1400.jpg"  alt="" width="200" height="200" >
          </div>
          <div class="col-7">
-           <h3>Rebuild.fm</h3>
+            <h5>エピソード名：</h5>
            <h5>Just Do It(hak,higepon)</h5>
            <h6>Hakuro Matsuda さん、Taro Minowa さんをゲストに迎えて、Stadia, ブラックホール、転職、ゲームなどについて話しました。 (4/12 Rebuild Meetup イベントにて収録)。スポンサー: Mercari</h6>
           </div>
         </div>
         </div>
-          <div class="nav nav-tabs" id="tab-menus" role="tablist">
-            <!-- タブ01 -->
-            <a class="nav-item nav-link active" id="tab-menu01" data-toggle="tab" href="#panel-menu01" role="tab" aria-controls="panel-menu01" aria-selected="true">エピソード</a>
-            <!-- タブ02 -->
-            <a class="nav-item nav-link" id="tab-menu02" data-toggle="tab" href="#panel-menu02" role="tab" aria-controls="panel-menu02" aria-selected="false">コメント</a>
-            </div>
-          <!-- /タブ型ナビゲーション -->
-          <!-- タブパネル -->
           <div class="tab-content" id="panel-menus">
             <!-- パネル01 -->
             <div class="tab-pane fade show active border border-top-0" id="panel-menu01" role="tabpanel" aria-labelledby="tab-menu01">
               <div class="row p-1">
                 <div class="col-12">
-                    <table class="table table-hover">
+                    <table class="table">
                         <tbody>
-                           <tr><a href="episode.html" class="stretched-link">
-                            <th scope="row"><a href="episode.html"><img src="img/saisei.png" alt="再生ボタン"></a></th>
-                            <th><a href="episode.html" class="stretched-link">エピソード01</a></th>
-                            <th><img src="img/heartmarkkara.png" alt="" class="" data-toggle="modal" data-target="#exampleModalCenter"></th>
-                          </a></tr>
                           <tr>
-                            <td scope="row"><a href="episode.html"><img src="img/saisei.png" alt="再生ボタン"></a></td>
-                            <th><a href="episode.html" class="stretched-link">エピソード03</a></th>
-                            <td><img src="img/heartmarkkara.png" alt="" class="" data-toggle="modal" data-target="#exampleModalCenter"></td>
+                              <div class="audio_wrap">
+                                  <div class="audio_button"></div>
+                                   <th class="text-center" >
+                                    <audio src="heartdyaslagu.mp3" controls="controls" toplay ID="Player"></audio>
+                                  </th>
+                                </div>
+                           </tr>
+                            <tr>
+                              <th class="text-center" >
+                                <button type="button" class="btn btn-dark btn-sm" onclick="timeupdate();" id="btn_time"></a></button>/
+                                <button type="button" class="btn btn-dark btn-sm" onclick="duration();" id="btn_duration"></a></button>
+                                 <button type="button" class="btn btn-dark btn-sm" onclick="volume();"></a></button>
+                          <tr>
+                              <th class="text-center">
+                                  <div id="audio_volume">
+                                    <i class="icon-volume-down"></i>
+                                    <input type="range" id="volume" value="50" min="0" max="99" />
+                                    <i class="icon-volume-up"></i>
+                                  </div>
+                              </th>
+                            </tr>
+                                <button type="button" class="btn btn-dark btn-sm" onclick="backAudio()">-10秒</button>
+                                <button id="on_off" type="button" class="btn btn-dark btn-lg" onclick="playsong()">
+                                 <img id="play_pause" src="img/saiseishiro.png" alt="" onclick="changeIMG()"></button>   
+                                   <!-- <a id="stop"><img src="img/pouzu.png" alt=""></a> -->
+                                  <!-- <button type="button" class="btn btn-dark btn-sm" onclick="stopsong()"><img src="img/teishi_shiro.png" alt=""></button>  -->
+                                  <button type="button" class="btn btn-dark btn-sm" onclick="forwardAudio()">+10秒</button>
+                            </th>
+                            <!-- メイン操作JS -->
+                            <script>
+                                function playsong() {
+                                   document.getElementById("Player").play();
+                                } 
+                                function pausesong() {
+                                    document.getElementById("Player").pause();
+                                }
+                            function forwardAudio() {
+                                var player = document.getElementById('Player');
+                                player.currentTime += 10.0; 
+                            }
+                            function backAudio() {
+                                var player = document.getElementById('Player');
+                                player.currentTime  -= 10.0; 
+                            }
+                    　</script>
+                    <script>
+                      var TARGET = document.getElementById('Player');
+                      function timeupdate(){
+                        TARGET.play();
+                      TARGET.addEventListener("timeupdate", function() {
+                       var NOW = Math.floor(TARGET.currentTime);
+                        document.getElementById('btn_time').innerHTML = NOW + 's';
+                       }, true);
+                       }
+                       function duration(){
+                        var TOTAL = Math.round(TARGET.duration);
+                       document.getElementById('btn_duration').innerHTML = TOTAL + 's';
+                       }
+                       function volume(Num){
+                       TARGET.volume = Num;
+                      }
+                    </script>
+                       <script>
+                     　var img = new Array();
+                       img[0] = new Image();
+                       img[0].src = "img/saiseishiro.png";
+                       img[1] = new Image();
+                       img[1].src=  "img/pouzu.png";
+                       //画像番号用のグローバル変数
+                       var cnt=0;
+                      //画像切り替え関数
+                      function changeIMG(){
+                      //画像番号を進める
+                      if (cnt == 1)
+                      { cnt=0; }
+                       else
+                      { cnt++; }
+                      //画像を切り替える
+                      document.getElementById("play_pause").src=img[cnt].src;
+                      }
+                      </script>
+                       <!-- <script>
+                        　var ad = new array();
+                          ad[0] = new Audio();
+                          ad[0].src = "img/saiseishiro.png";
+                          ad[1] = new Audio();
+                          ad[1].src=  "img/pouzu.png";
+                          var ado=0;
+                          function changeIMG(){
+                          if (ado == 1)
+                          { ado=0; }
+                           else
+                           { ado++; }
+                             document.getElementById("on_off").src=ad[ado].src;
+                           }
+                      </script> -->
                           </tr>
                           <tr>
-                              <th scope="row"><a href="episode.html"><img src="img/saisei.png" alt="再生ボタン"></a></th>
-                            <th><a href="episode.html" class="stretched-link">エピソード03</a></th>
-                            <td><img src="img/heartmarkkara.png" alt="" class="" data-toggle="modal" data-target="#exampleModalCenter"></td>
-                          </tr>
+                              <th class="text-left">
+                              <div class="btn-group dropup">
+                                  <button type="button" class="btn btn-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><a id="area1">1.0 倍速</a></button>
+                                  <div class="dropdown-menu">
+                                      <a class="dropdown-item" onclick="speedup15()" href="#">1.5 倍速</a>
+                                      <a class="dropdown-item" onclick="speedup125()"  href="#">1.25倍速</a>
+                                      <a class="dropdown-item" onclick="speed1()"  href="#">1.0 倍速</a>
+                                      <a class="dropdown-item" onclick="speeddown075()" href="#">0.75倍速</a>
+                                      <a class="dropdown-item" onclick="speeddown05()"  href="#">0.5 倍速</a>
+                                  </div>
+                                </div>
+                              </th>
+                            <!-- 速度調整操作JS -->
+                           <script >
+                            function speedup15() {
+                            var player = document.getElementById('Player');
+                            player.playbackRate  = 1.5;
+                            document.getElementById("area1").innerText =  '1.5 倍速'
+                              }
+                              function speedup125() {
+                            var player = document.getElementById('Player');
+                            player.playbackRate  = 1.25;
+                            document.getElementById("area1").innerText =  '1.25倍速'
+                              }
+                              function speed1() {
+                            var player = document.getElementById('Player');
+                            player.playbackRate  = 1;
+                            document.getElementById("area1").innerText =  '1.0 倍速'
+                              }
+                              function speeddown075() {
+                            var player = document.getElementById('Player');
+                            player.playbackRate  = 0.75;
+                            document.getElementById("area1").innerText =  '0.75倍速'
+                              }
+                              function speeddown05() {
+                            var player = document.getElementById('Player');
+                            player.playbackRate  = 0.5;
+                            document.getElementById("area1").innerText =  '0.5 倍速'
+                              }
+                          </script>
+                              <th class=""><img src="img/gift.png" alt="" class="" data-toggle="modal" data-target="#gift"></th>
+                              <th class=""><img src="img/heartmarkkara.png" alt="" class="" data-toggle="modal" data-target="#like"></th>
+                        　　  </tr>
                         </tbody>
                       </table>
                 </div>
               </div>
             </div>
-            <!-- パネル02 -->
-            <div class="tab-pane fade border border-top-0" id="panel-menu02" role="tabpanel" aria-labelledby="tab-menu02">
-              <div class="row p-3 table-hover">
-                      <li class="media mb-4">
-                        <img class="mr-2" src="http://placehold.it/60x60&text=img" alt="">
-                        <div class="media-body">
-                          <h5>○○さん</h5>
-                          この文章はダミーです。この文章はダミーです。この文章はダミーです。この文章はダミーです。
-                        </div>
-                      </li>
-                      <li class="media mb-4">
-                        <img class="mr-2" src="http://placehold.it/60x60&text=img" alt="">
-                        <div class="media-body">
-                          <h5>○○さん</h5>
-                          この文章はダミーです。この文章はダミーです。この文章はダミーです。この文章はダミーです。
-                        </div>
-                      </li>
-                      <li class="media mb-4">
-                        <img class="mr-2" src="http://placehold.it/60x60&text=img" alt="">
-                        <div class="media-body">
-                          <h5>○○さん</h5>
-                          この文章はダミーです。この文章はダミーです。この文章はダミーです。この文章はダミーです。
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-        </div>
 
         
 <!-- /コンテンツ03 -->
-  <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Modal いいね後の画面-->
+<div class="modal fade" id="like" tabindex="-1" role="dialog" aria-labelledby="likeCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">いいね、ありがとう！！</h5>
+          <h5 class="modal-title" id="likeLongTitle">いいね、ありがとう！！</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -152,14 +244,84 @@
             <h5 class="text-center">Rebuild.fmさんにいいねが送られました！</h5>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
         </div>
       </div>
     </div>
   </div>
+  <!-- Modal ギフトの選択画面-->
+  <div class="modal" id="gift" tabindex="-1" role="dialog" aria-labelledby="giftCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="giftLongTitle">ギフトを選んでね！！</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <table class="table table-hover">
+                  <tbody>
+                      <tr>
+                       <th scope="row"><img src="img/ocha.png" alt="オチャ"></th>
+                       <th>オチャ</th>
+                       <th>¥１００</th>
+                       <th><button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#giftafter">購入する</button></th>
+                     </tr>
+                     <tr>
+                         <th scope="row"><img src="img/hoshi.png" alt="スター"></th>
+                         <th>スター</th>
+                         <th>¥２００</th>
+                         <th><button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#giftafter">購入する</button></th>
+                        </tr>
+                       <tr>
+                           <th scope="row"><img src="img/hanabi.png" alt="ハナビ"></th>
+                           <th>ハナビ</th>
+                           <th>¥３００</th>
+                           <th><button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#giftafter">購入する</button></th>
+                          </tr>
+                         <tr>
+                             <th scope="row"><img src="img/tawa.png" alt="タワー"></th>
+                             <th>タワー</th>
+                             <th>¥５００</th>
+                             <th><button type="button" class="btn btn-primary" data-dismiss="modal" data-toggle="modal" data-target="#giftafter">購入する</button></th>
+                            </tr>
+                   </tbody>
+                </table>
+              <!-- <div class="text-center">
+               <img src="img/gift_pink.png" alt="">
+              </div>
+              <h5 class="text-center">Rebuild.fmさんに<br>ギフティングが送られました！</h5> -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
-
+  <!-- Modal ギフティング後の画面-->
+    <div class="modal fade" id="giftafter" tabindex="-1" role="dialog" aria-labelledby="giftafterCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="giftafterLongTitle">ギフティング、ありがとう！！</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                 <img src="img/gift_pink.png" alt="">
+                </div>
+                <h5 class="text-center">Rebuild.fmさんに<br>ギフティングされました！</h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+            </div>
+          </div>
+        </div>
+      </div>
       </section>
     </div>
 </main>
@@ -173,7 +335,6 @@
   </div>
 </footer>
 <!-- /フッター -->
-
 <script src="js/jquery-3.3.1.slim.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 </body>
